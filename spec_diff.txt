@@ -1,0 +1,20 @@
+diff --git a/SPEC.md b/SPEC.md
+index 42da2ec..bad088b 100644
+--- a/SPEC.md
++++ b/SPEC.md
+@@ -11,6 +11,7 @@
+ | title | TEXT | NOT NULL (1〜100文字) | チケットの件名 |
+ | assignee | TEXT | NOT NULL (1〜50文字) | 担当者名 |
+ | status | TEXT | NOT NULL | `TODO`, `DOING`, `DONE` のいずれか（初期値: `TODO`） |
++| priority | TEXT | NOT NULL | `HIGH`, `MEDIUM`, `LOW` のいずれか（初期値: `LOW`） |
+ | created_at | TEXT | NOT NULL | 作成日時 (ISO8601形式) |
+ 
+ ## 3. 画面・API仕様
+@@ -31,6 +32,7 @@
+   - `status` は `TODO`, `DOING`, `DONE` 以外は `422` エラー。
+   - 存在しない `ticket_id` の場合は `404 Not Found` を返す。
+   - **禁止遷移ルール**: 一度 `DONE`（完了）になったチケットを `TODO` に直接戻すことは禁止する（`400 Bad Request` を返す）。※`DOING` への差し戻しは許可。
++  - `priority` が `HIGH` のチケットは削除できない。
+ 
+ ### 3.4 チケット削除 (`DELETE /api/tickets/{ticket_id}`)
+ - 存在しない `ticket_id` の場合は `404 Not Found` を返す。
